@@ -6,3 +6,4 @@ bin/
 .DS_Store
 ros_wrapper/src/CMakeLists.txt
 ros_wrapper/.catkin_workspace
+cmake-build-*

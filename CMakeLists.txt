@@ -1,9 +1,32 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.19)
 
-set(CMAKE_BUILD_TYPE "Release")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+if (PR)
+    if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
+        message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
+        file(DOWNLOAD "https://raw.githubusercontent.com/conan-io/cmake-conan/v0.16.1/conan.cmake"
+                "${CMAKE_BINARY_DIR}/conan.cmake"
+                EXPECTED_HASH SHA256=396e16d0f5eabdc6a14afddbcfff62a54a7ee75c6da23f32f7a31bc85db23484
+                TLS_VERIFY ON)
+    endif ()
+    include(${CMAKE_BINARY_DIR}/conan.cmake)
+    # settings comes from parent project if possible
+    # conan_cmake_autodetect(settings) requires compiler version to be defined first
+    conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}
+            REMOTE ec2
+            BUILD outdated
+            PROFILE_HOST ${PR}
+            PROFILE_BUILD default
+            SETTINGS
+            ${settings}
+            build_type=${CMAKE_BUILD_TYPE}
+            GENERATOR cmake
+            )
+    include(${CMAKE_CURRENT_BINARY_DIR}/conan_toolchain.cmake)
+endif ()
 
 project(larvio)
+include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup(TARGETS)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 #set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
