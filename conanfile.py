@@ -16,23 +16,13 @@ class SLAMConan(ConanFile):
     default_options = {"shared": True, "fPIC": True}
     generators = "cmake"
 
-    CONAN_USERNAME = "Zappar"
-    CONAN_CHANNEL = "SLAM"
-    os.environ['CONAN_USERNAME'] = CONAN_USERNAME
-    os.environ['CONAN_CHANNEL'] = CONAN_CHANNEL
-    os.environ['GIT_USERNAME'] = ""
-    os.environ['GIT_PWD'] = ""
-
-    # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    # sudo "/Applications/CMake.app/Contents/bin/cmake-gui" --install
-    # ninja
-    requires = [f"ceres_solver/2.0.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"eigen/3.4-rc1@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"boost/1.75.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"glog/0.4.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"gflags/2.2.2@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"opencv/4.5.2@{CONAN_USERNAME}/{CONAN_CHANNEL}",  # public recipe no support for cuda and freetype bug on linux
-                f"pangolin/0.6@{CONAN_USERNAME}/{CONAN_CHANNEL}",
+    requires = ["ceres_solver/2.0.0",
+                "eigen/3.4-rc1",
+                "boost/1.75.0",
+                "glog/0.4.0",
+                "gflags/2.2.2",
+                "opencv/4.5.2",
+                "pangolin/0.6",
                 ]
 
     keep_imports = True
@@ -59,7 +49,6 @@ class SLAMConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["Vis"]
-
 
     def generate(self):
         f = open("conan_toolchain.cmake", "w")

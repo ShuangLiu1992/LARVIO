@@ -13,7 +13,7 @@ if (PR)
     # conan_cmake_autodetect(settings) requires compiler version to be defined first
     conan_cmake_install(PATH_OR_REFERENCE ${CMAKE_CURRENT_SOURCE_DIR}
             REMOTE ec2
-            BUILD outdated
+            BUILD missing
             PROFILE_HOST ${PR}
             PROFILE_BUILD default
             SETTINGS
@@ -25,6 +25,7 @@ if (PR)
 endif ()
 
 project(larvio)
+set (CMAKE_CXX_STANDARD 14)
 include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
 
@@ -35,6 +36,7 @@ find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(GLEW REQUIRED)
 find_package(Pangolin REQUIRED)
 
 include_directories(
