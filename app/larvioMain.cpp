@@ -23,20 +23,16 @@
 using namespace std;
 
 
-int main(int argc, char **argv) {
-    if(argc != 5) {
-		cerr << endl << "Usage: ./larvio path_to_imu/data.csv path_to_cam0/data.csv path_to_cam0/data config_file_path" << endl;
-        return 1;
-    }
+int main(int , char **) {
 
 	// Read sensors
     vector<larvio::ImuData> allImuData;
     vector<larvio::ImgInfo> allImgInfo;
-    larvio::loadImuFile(argv[1], allImuData);
-    larvio::loadImageList(argv[2], allImgInfo);
+    larvio::loadImuFile("/home/sliu/data/MH_01_easy/mav0/imu0/data.csv", allImuData);
+    larvio::loadImageList("/home/sliu/data/MH_01_easy/mav0/cam0/data.csv", allImgInfo);
 
     // Path of config file
-    std::string config_file(argv[4]);
+    std::string config_file("/home/sliu/data/MH_01_easy/mav0/euroc.yaml");
 
 	// Initialize image processer.
 	larvio::ImageProcessorPtr ImgProcesser;
@@ -89,7 +85,7 @@ int main(int argc, char **argv) {
 		string temp = allImgInfo[j].imgName.substr(0,allImgInfo[j].imgName.size()-1);
 		char *fullPath = new char[100];
     	memset(fullPath,0,100);
-	    sprintf(fullPath,"%s/%s",argv[3],temp.c_str());
+    	sprintf(fullPath,"%s/%s","/home/sliu/data/MH_01_easy/mav0/cam0/data",temp.c_str());
 		larvio::ImageDataPtr imgPtr(new larvio::ImgData);
 		imgPtr->timeStampToSec = allImgInfo[j].timeStampToSec;
 		imgPtr->image = cv::imread(fullPath,0);

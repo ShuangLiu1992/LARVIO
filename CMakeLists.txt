@@ -35,7 +35,6 @@ find_package(OpenCV REQUIRED)
 find_package(Boost REQUIRED)
 find_package(Ceres REQUIRED)
 find_package(Eigen3 REQUIRED)
-find_package(SuiteSparse REQUIRED)
 find_package(Pangolin REQUIRED)
 
 include_directories(

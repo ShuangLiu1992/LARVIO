@@ -16,7 +16,10 @@
 #include <Eigen/SVD>
 #include <Eigen/QR>
 #include <Eigen/SparseCore>
-#include <Eigen/SPQRSupport>
+#include <Eigen/SparseQR>
+#include <Eigen/OrderingMethods>
+
+//#include <Eigen/SPQRSupport>
 #include <boost/math/distributions/chi_squared.hpp>
 
 #include <larvio/larvio.h>
@@ -1432,8 +1435,7 @@ void LarVio::measurementUpdate_msckf(
     SparseMatrix<double> H_sparse = H.sparseView();
 
     // Perform QR decompostion on H_sparse.
-    SPQR<SparseMatrix<double> > spqr_helper;
-    spqr_helper.setSPQROrdering(SPQR_ORDERING_NATURAL);
+    SparseQR<SparseMatrix<double>,COLAMDOrdering<int>> spqr_helper;
     spqr_helper.compute(H_sparse);
 
     MatrixXd H_temp;
@@ -2104,8 +2106,7 @@ void LarVio::removeLostFeatures() {
               jacobian_row_size_ekf_new - feature_idp_dim*ekf_new_feature_ids.size());
       // Compute column space of H_f_ekf_new.
       SparseMatrix<double> H_sparse = H_f_ekf_new.sparseView();
-      SPQR<SparseMatrix<double> > spqr_helper;
-      spqr_helper.setSPQROrdering(SPQR_ORDERING_NATURAL);
+      SparseQR<SparseMatrix<double>,COLAMDOrdering<int>> spqr_helper;
       spqr_helper.compute(H_sparse);
       MatrixXd Q;
       MatrixXd IdenMx = MatrixXd::Identity(jacobian_row_size_ekf_new,jacobian_row_size_ekf_new);
@@ -2157,8 +2158,7 @@ void LarVio::removeLostFeatures() {
       SparseMatrix<double> H_sparse = H_ekf.sparseView();
 
       // Perform QR decompostion on H_sparse.
-      SPQR<SparseMatrix<double> > spqr_helper;
-      spqr_helper.setSPQROrdering(SPQR_ORDERING_NATURAL);
+      SparseQR<SparseMatrix<double>,COLAMDOrdering<int>> spqr_helper;
       spqr_helper.compute(H_sparse);
 
       MatrixXd H_temp;
@@ -2215,8 +2215,7 @@ void LarVio::removeLostFeatures() {
       SparseMatrix<double> H_sparse = H_msckf.sparseView();
 
       // Perform QR decompostion on H_sparse.
-      SPQR<SparseMatrix<double> > spqr_helper;
-      spqr_helper.setSPQROrdering(SPQR_ORDERING_NATURAL);
+      SparseQR<SparseMatrix<double>,COLAMDOrdering<int>> spqr_helper;
       spqr_helper.compute(H_sparse);
 
       MatrixXd H_temp;

@@ -28,11 +28,11 @@ class SLAMConan(ConanFile):
     # ninja
     requires = [f"ceres_solver/2.0.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
                 f"eigen/3.4-rc1@{CONAN_USERNAME}/{CONAN_CHANNEL}",
+                f"boost/1.75.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
                 f"glog/0.4.0@{CONAN_USERNAME}/{CONAN_CHANNEL}",
                 f"gflags/2.2.2@{CONAN_USERNAME}/{CONAN_CHANNEL}",
                 f"opencv/4.5.2@{CONAN_USERNAME}/{CONAN_CHANNEL}",  # public recipe no support for cuda and freetype bug on linux
                 f"pangolin/0.6@{CONAN_USERNAME}/{CONAN_CHANNEL}",
-                f"suite_sparse/5.10.1@{CONAN_USERNAME}/{CONAN_CHANNEL}",
                 ]
 
     keep_imports = True
